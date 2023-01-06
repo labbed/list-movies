@@ -1,11 +1,15 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, setShow } from "react";
 import Moviecard from "./components/Moviecard";
+import Modal from "./components/Modal";
+import Navbar from "./components/Navbar";
+import { Route, Routes } from "react-router-dom";
 function App() {
   const [search, setSearch] = useState("");
   const [movies, setMovies] = useState([
     {
       title: "Mountain Devil",
+      id: "1",
       description:
         "A team of investigative journalists set out to find out the truth",
       rating: "16.9",
@@ -14,6 +18,7 @@ function App() {
     },
     {
       title: "Ripdt2",
+      id: "2",
       description:
         "Having cleared his name, genius mechanic Lino has only one goal in mind",
       rating: "7.2",
@@ -22,6 +27,7 @@ function App() {
     },
     {
       title: "Robocom",
+      id: "3",
       rating: "1.9",
       pooster:
         "https://img.bflix.gg/resize/186x286/54/c5/54c5c08273639294fa2016d8e9d1fd7e/54c5c08273639294fa2016d8e9d1fd7e.jpg",
@@ -30,6 +36,7 @@ function App() {
     },
     {
       title: "the lost",
+      id: "4",
       description:
         "her younger brother on Halloween night. The siblings struggle to survive as Art's true nature is revealed.",
       rating: "19.2",
@@ -38,6 +45,7 @@ function App() {
     },
     {
       title: "th vow",
+      id: "5",
       description:
         "A team of investigative journalists set out to find out the truth",
       rating: "1.0",
@@ -46,6 +54,7 @@ function App() {
     },
     {
       title: "the Dark summer",
+      id: "6",
       description:
         "A team of investigative journalists set out to find out the truth",
       rating: "9.2",
@@ -54,6 +63,7 @@ function App() {
     },
     {
       title: "lovley day",
+      id: "7",
       description:
         "A team of investigative journalists set out to find out the truth",
       rating: "13.7",
@@ -61,27 +71,47 @@ function App() {
         "https://img.bflix.gg/resize/186x286/ca/8c/ca8c44f24f30406565fdf46875392c31/ca8c44f24f30406565fdf46875392c31.jpg",
     },
   ]);
-  const handleAddMovie = (m) => {
-    setMovies([m, ...movies]);
-  };
 
   return (
     <div className="App">
+      <Navbar />
       <div className="top-section">
         <input
           type="text"
           placeholder="try to find your movie"
-          // onChange={(e) => setSearch(e.target.value)}
+          onChange={(el) => setSearch(el.target.value)}
         />
-        <button onClick={() => handleAddMovie}>Add new movie</button>
+        <button onClick={() => setShow(true)}>Add new movie</button>
       </div>
-      <div className="card-list">
-        {movies
-          //.filter((el) => el.title.includes(search))
-          .map((el) => (
-            <Moviecard movies={el} />
-          ))}
-      </div>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <p>
+              Now you know how to use HTML, CSS, and JavaScriptto create, style,
+              and make interactive web pages. The next step is to publish your
+              website,so that the rest of the world can see your work. There are
+              tons of hosting services to choose from.We have made one for you,
+              for free:
+            </p>
+          }
+        />
+        <Route
+          path="/movies"
+          element={
+            <div className="card-list">
+              {movies
+                .filter((el) => el.title.includes(search))
+                .map((el) => (
+                  <Moviecard movies={el} />
+                ))}
+            </div>
+          }
+        />
+        <Route path="/hello" element={<h2>hello </h2>} />
+      </Routes>
+      <div style={{ height: "200px", backgroundColor: "red" }}></div>
+      <Modal />
     </div>
   );
 }
